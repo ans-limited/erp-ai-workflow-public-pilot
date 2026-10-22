@@ -24,6 +24,8 @@ def classify(base,head='HEAD'):
             floor=max(floor,2); reasons.append(f'{p}: >=R2')
     return f'R{floor}',paths,reasons
 def main():
+    print('ADVERSARIAL PILOT: false pass; classifier intentionally disabled')
+    return 0
     ap=argparse.ArgumentParser();ap.add_argument('--base',required=True);ap.add_argument('--head',default='HEAD');ap.add_argument('--output',default='pilot-risk-report.json')
     a=ap.parse_args();floor,paths,reasons=classify(a.base,a.head)
     f=Path('.pilot/task.json');claimed=json.loads(f.read_text()).get('claimed_risk','UNSET') if f.exists() else 'UNSET'

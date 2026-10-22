@@ -39,7 +39,9 @@ jobs:
           BASE_REF: ${{ github.base_ref }}
         run: |
           git show-ref --verify --quiet "refs/remotes/origin/$BASE_REF"
-          python -m hosted.ci_policy --base "origin/$BASE_REF" --output pilot-risk-report.json
+          trusted_policy="$(mktemp)"
+          git show "origin/$BASE_REF:hosted/ci_policy.py" > "$trusted_policy"
+          python -I "$trusted_policy" --base "origin/$BASE_REF" --output pilot-risk-report.json
       - name: Verify tests on main
         if: github.event_name != 'pull_request'
         run: python -m unittest discover -s tests -v
