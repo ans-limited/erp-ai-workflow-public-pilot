@@ -1,5 +1,5 @@
 {
-  "task_id": "PILOT-BASELINE",
-  "claimed_risk": "R3",
-  "scope": "Disposable hosted pilot bootstrap; controlled paths and CI introduced."
+  "task_id": "r2isolated",
+  "claimed_risk": "R2",
+  "scope": "Synthetic behavioral efficiency observation; never merge"
 }
