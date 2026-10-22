@@ -1,0 +1,53 @@
+name: Pilot Assurance
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  unit-tests:
+    name: unit-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Execute actual tests
+        run: python -m unittest discover -s tests -v
+  risk-policy:
+    name: risk-policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run diff-based risk floor
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          git show-ref --verify --quiet "refs/remotes/origin/$BASE_REF"
+          python -m hosted.ci_policy --base "origin/$BASE_REF" --output pilot-risk-report.json
+      - name: Verify tests on main
+        if: github.event_name != 'pull_request'
+        run: python -m unittest discover -s tests -v
+      - name: Upload risk evidence
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: pilot-risk-evidence
+          path: pilot-risk-report.json
+          if-no-files-found: warn
+          retention-days: 30

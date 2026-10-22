@@ -1,0 +1,7 @@
+# Demonstration only: CODEOWNERS has no force unless required by branch ruleset.
+# PR author cannot approve their own PR.
+/.github/ @srahman75
+/finance/ @srahman75
+/controls/ @srahman75
+/hosted/ @srahman75
+/.pilot/ @srahman75
