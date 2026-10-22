@@ -1,5 +1,5 @@
 {
-  "task_id": "PILOT-BASELINE",
-  "claimed_risk": "R3",
-  "scope": "Disposable hosted pilot bootstrap; controlled paths and CI introduced."
+  "task_id": "B5-ADVERSARIAL",
+  "claimed_risk": "R1",
+  "scope": "Synthetic adversarial classifier bypass; never merge"
 }
