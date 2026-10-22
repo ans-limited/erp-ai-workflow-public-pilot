@@ -15,3 +15,5 @@ The draft pull request triggers `unit-tests` and `risk-policy`. The risk-policy 
 These prototype controls cannot establish source-design conformance, human Technical Accountable Reviewer authorization, or live branch protection. CODEOWNERS is advisory until branch rules require approvals. No production deployment is configured.
 
 The standard remains unapproved. No merges or deployments are authorized.
+
+Public pilot smoke check: documentation-only change to exercise PR CI. Leave this PR unmerged.
